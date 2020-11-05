@@ -16,7 +16,7 @@ struct MoviesItemRow: View {
                 ThumbImage(withURL: data.imagePath)
                 VStack(alignment: .leading,spacing: 10) {
                     HeaderText(text: data.title)
-                    SubheaderText(text: data.overview)
+                    SubheaderText(text: data.overview).lineLimit(3)
                     SmallText(text: data.releaseDate.formatToString("dd.MM.yyyy"))
                 }
                 .fixedSize(horizontal: false,
