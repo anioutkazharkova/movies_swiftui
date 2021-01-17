@@ -41,7 +41,9 @@ class NetworkService: NSObject, INetworkService {
         
         let apiUrl = url//"\(self.config.getBaseUrl())\(url)"
         
-        let urlPath = URL(string: apiUrl)!
+        guard let urlPath = URL(string: apiUrl) else {
+            return Result<T, Error>.Publisher(ErrorResponse(type: .network)).eraseToAnyPublisher()
+        }
         var urlRequest = URLRequest(url: urlPath)
         urlRequest.httpMethod = method.toMethod()
         
