@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import Combine
 
 protocol INetworkService {
-    func request<T>(url: String, parameters: [String : Any], method: Methods, completion: @escaping(ContentResponse<T>)->Void) where T: Codable
+    func request<T:Codable>(url: String, parameters: [String : Any], method: Methods)->Future<T,Error>
 }

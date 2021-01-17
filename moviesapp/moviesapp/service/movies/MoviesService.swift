@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+/*
 class MoviesService : NSObject {
     let networkService = NetworkService()
     
@@ -29,3 +29,4 @@ class MoviesService : NSObject {
         }
     }
 }
+*/

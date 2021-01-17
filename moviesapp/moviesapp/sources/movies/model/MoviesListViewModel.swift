@@ -1,24 +1,19 @@
 //
-//  MoviesListLogic.swift
+//  MoviesListViewModel.swift
 //  moviesapp
 //
-//  Created by Anna Zharkova on 06.11.2020.
+//  Created by Anna Zharkova on 17.01.2021.
 //
 
 import Foundation
 import Combine
 
-protocol IMoviesLogic : class {
-    var output: IMoviesOutput? {get set}
-}
-
-class MoviesListLogic {
+class MoviesListViewModel: ObservableObject {
     weak var service = MoviesFutureService.shared
-    weak var output: IMoviesOutput?
-    private var items: [MovieItem] = [MovieItem]()
+    @Published  var data:[MovieItem] = [MovieItem]()
     var subscriptions = Set<AnyCancellable>()
     
-    func loadData() {
+    func loadMovies() {
         _ = self.service?.getMovies().sink(receiveCompletion: { completion in
             switch completion {
             case .failure(let error):
@@ -28,10 +23,8 @@ class MoviesListLogic {
             }
         }, receiveValue: { (list) in
             let items = list.results
-            self.items = [MovieItem]()
-            self.items.append(contentsOf: items)
-            self.output?.setupMovies(items: items)
+            self.data = [MovieItem]()
+            self.data.append(contentsOf: items)
         }).store(in: &subscriptions)
     }
-    
 }

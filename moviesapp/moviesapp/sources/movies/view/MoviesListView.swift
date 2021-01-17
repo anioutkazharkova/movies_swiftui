@@ -8,15 +8,17 @@
 import SwiftUI
 
 protocol IMoviesListView : IModelView {
-    
 }
 
 struct MoviesListView: View, IMoviesListView {
+    
+    
     var viewModel: IModel? {
         return model
     }
-    
     @ObservedObject var model: MoviesListModel = MoviesListModel()
+
+   // @ObservedObject var vm: MoviesListViewModel = MoviesListViewModel()
     var processor: IProcessor? = nil 
     
     var body: some View {
@@ -28,6 +30,7 @@ struct MoviesListView: View, IMoviesListView {
                 MoviesItemRow(data: item)
                 })
         }.navigationBarTitle("", displayMode: .inline).onAppear(){
+           // self.vm.loadMovies()
             self.processor?.perform(type: .movies)
         }
         }

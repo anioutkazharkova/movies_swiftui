@@ -56,7 +56,7 @@ class ContentResponse<T: Codable>: NSObject {
 
 
 
-class ErrorResponse: NSObject, Codable {
+class ErrorResponse: NSObject, Codable, Error {
     var code: String? = ""
     var status: String? = ""
     var message: String? = ""
@@ -77,3 +77,4 @@ class ErrorResponse: NSObject, Codable {
         case message = "message"
     }
 }
+

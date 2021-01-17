@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol ISearchLogic : class {
     var output: ISearchOutput? {get set}
@@ -14,19 +15,24 @@ protocol ISearchLogic : class {
 }
 
 class SearchLogic: ISearchLogic {
-    weak var service = MoviesService.shared
+    weak var service = MoviesFutureService.shared
     weak var output: ISearchOutput?
     private var items: [MovieItem] = [MovieItem]()
+    var subscriptions = Set<AnyCancellable>()
     
     func search(text: String) {
-        self.service?.search(text: text){ [weak self] (result: ContentResponse<MoviesList>)  in
-            guard let self = self else {return}
-            if result.content != nil {
-                self.items = [MovieItem]()
-                self.items.append(contentsOf: result.content?.results ?? [MovieItem]())
-                self.output?.setupMovies(items: self.items)
-            }
+    let _ =  self.service?.search(text: text).sink(receiveCompletion: { completion in
+        switch completion {
+        case .failure(let error):
+            print(error.localizedDescription)
+        case .finished:
+            print("Success")
         }
+    }, receiveValue: { (list) in
+        self.items = [MovieItem]()
+        self.items.append(contentsOf: list.results)
+        self.output?.setupMovies(items: self.items)
+    }).store(in: &subscriptions)
     }
     
 }
