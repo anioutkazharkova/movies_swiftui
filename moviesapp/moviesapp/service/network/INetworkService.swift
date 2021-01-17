@@ -10,5 +10,5 @@ import Foundation
 import Combine
 
 protocol INetworkService {
-    func request<T:Codable>(url: String, parameters: [String : Any], method: Methods)->Future<T,Error>
+    func request<T:Codable>(url: String, parameters: [String : Any], method: Methods)->AnyPublisher<T,Error>
 }

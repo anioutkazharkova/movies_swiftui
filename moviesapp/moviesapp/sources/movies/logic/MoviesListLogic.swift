@@ -22,6 +22,7 @@ class MoviesListLogic {
         _ = self.service?.getMovies().sink(receiveCompletion: { completion in
             switch completion {
             case .failure(let error):
+                self.output?.showError(error: error)
                 print(error.localizedDescription)
             case .finished:
                 print("Success")

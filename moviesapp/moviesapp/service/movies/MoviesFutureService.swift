@@ -9,6 +9,8 @@ import Foundation
 import Combine
 
 class MoviesFutureService : NSObject {
+    private let key = "6c52966d9be717e486a2a0c499867009"
+    private let baseUrl = "http://api.themoviedb.org/3/discover/"
     let networkService = NetworkService()
     
     private override init() {
@@ -18,10 +20,10 @@ class MoviesFutureService : NSObject {
     static let shared = MoviesFutureService()
     
     func getMovies()->AnyPublisher<MoviesList,Error> {
-        return self.networkService.request(url: "http://api.themoviedb.org/3/discover/movie?api_key=6c52966d9be717e486a2a0c499867009&page=1&sort_by=popularity.desc", parameters: [:], method: .get).eraseToAnyPublisher()
+        return self.networkService.request(url: "\(baseUrl)movie?api_key=\(key)&page=1&sort_by=popularity.desc", parameters: [:], method: .get)
     }
     
     func search(text: String)->AnyPublisher<MoviesList,Error>  {
-        return  self.networkService.request(url: "http://api.themoviedb.org/3/search/movie?api_key=6c52966d9be717e486a2a0c499867009&query=\(text)&page=1", parameters: [:], method: .get).eraseToAnyPublisher()
+        return  self.networkService.request(url: "\(baseUrl)movie?api_key=\(key)&query=\(text)&page=1", parameters: [:], method: .get)
     }
 }

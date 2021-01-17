@@ -30,6 +30,7 @@ class ContentResponse<T: Codable>: NSObject {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         jsonDecoder.dateDecodingStrategy = .formatted(df)
+        if code >= 200 && code < 400 {
         do {
             let result = try jsonDecoder.decode(T.self, from: data)
             content = result
@@ -38,13 +39,15 @@ class ContentResponse<T: Codable>: NSObject {
         }catch {
             print("\(error)")
         }
+        }else {
         
         do {
             self.error = try jsonDecoder.decode(ErrorResponse.self, from: data)
-            
-            print(content)
+            self.error?.code = code
+            print(error)
         }catch {
             print("\(error)")
+        }
         }
     }
     
@@ -57,7 +60,7 @@ class ContentResponse<T: Codable>: NSObject {
 
 
 class ErrorResponse: NSObject, Codable, Error {
-    var code: String? = ""
+    var code: Int? = 0
     var status: String? = ""
     var message: String? = ""
     var type: ErrorType = .other

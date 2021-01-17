@@ -9,6 +9,9 @@
 import Foundation
 protocol  IModel:class {
     func update(data: Any?)
+    
+    func showError(error: String)
+    
     var listener:IContainer? {get set}
     
 }

@@ -39,5 +39,9 @@ struct MoviesListView: View, IMoviesListView {
     func update(data: Any?) {
         self.model.update(data: data)
     }
+    
+    func showError(error: String) {
+        self.model.showError(error: error)
+    }
 }
 

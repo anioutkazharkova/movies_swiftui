@@ -9,6 +9,8 @@ import Foundation
 
 protocol IMoviesOutput : class{
     func setupMovies(items: [MovieItem])
+    
+    func showError(error: Error)
 }
 
 class MoviesListProcessor: NSObject, IMoviesOutput, IProcessor {
@@ -26,5 +28,9 @@ class MoviesListProcessor: NSObject, IMoviesOutput, IProcessor {
     
     func setupMovies(items: [MovieItem]) {
         self.view?.update(data: items)
+    }
+    
+    func showError(error: Error) {
+        self.view?.showError(error: error.localizedDescription)
     }
 }

@@ -18,4 +18,8 @@ class MoviesListModel : ObservableObject, IModel{
             self.data = data
         }
     }
+    
+    func showError(error: String) {
+        self.listener?.showError(error: error)
+    }
 }

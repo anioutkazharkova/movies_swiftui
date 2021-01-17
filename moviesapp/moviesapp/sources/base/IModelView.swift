@@ -12,4 +12,6 @@ protocol IModelView {
     var viewModel: IModel? {get}
     
     func update(data: Any?)
+    
+    func showError(error: String)
 }
