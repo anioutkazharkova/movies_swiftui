@@ -66,34 +66,5 @@ class NetworkService: NSObject, INetworkService {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         return task
-        
-        /* self.urlSession?.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-         if let _ = error {
-         let errorResult =  ErrorResponse(type: .network)
-         DispatchQueue.main.async {
-         return promise(.failure(errorResult))
-         }
-         } else {
-         if let data = data, let response = response as? HTTPURLResponse {
-         let result = ContentResponse<T>(response: response, data: data)
-         DispatchQueue.main.async {
-         if let content = result.content {
-         return promise(.success(content))
-         } else
-         if let er = result.error {
-         return promise(.failure(er))
-         }
-         }
-         }else {
-         let errorResult =  ErrorResponse(type: .network)
-         DispatchQueue.main.async {
-         return promise(.failure(errorResult))
-         }
-         }
-         }
-         })
-         
-         self.dataTask?.resume()
-         }*/
     }
 }
