@@ -38,7 +38,8 @@ class NetworkService: NSObject, INetworkService {
     var dataTask: URLSessionDataTask? = nil
     
     func request<T>(url: String, parameters: [String : Any], method: Methods)->Future<T,Error> where T: Codable{
-        return Future { promise  in
+        return Future {[weak self] promise  in
+            guard let self = self else {return promise(.failure(ErrorResponse(type: .other)))}
             let apiUrl = url//"\(self.config.getBaseUrl())\(url)"
             
             guard let urlPath = URL(string: apiUrl) else {
